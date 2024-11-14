@@ -6,4 +6,8 @@ public class Surface {
         this.maxX = x;
         this.maxY = y;
     }
+
+    public boolean isValidCoordinate(int x, int y) {
+        return (x < 0 || x > maxX || y < 0 || y > maxY) ? false : true;
+    }
 }
