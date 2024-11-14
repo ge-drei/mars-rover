@@ -1,9 +1,8 @@
-import directions.*;
+import spatial.*;
 
 public class MarsMission {
     private Surface surface;
     private Rover rover;
-    private Rover.RoverPosition initialPos;
     private InputHandler handler;
 
     public MarsMission() {
@@ -44,26 +43,26 @@ public class MarsMission {
     public void begin() {
         setSurface(makeSurface(handler.getMaxSurfaceSize()));
 
-        Rover.RoverPosition roverPosition = handler.getRoverPosition();
+        RoverPosition roverPosition = handler.getRoverPosition();
         boolean exit = false;
         while (!exit) {
-            if (surface.isValidCoordinate(roverPosition.coordinates())) {
+            if (surface.isValidCoordinate(roverPosition.getCoordinates())) {
                 exit = true;
             } else {
                 handler.out(String.format("Position must be within maximum bounds %s", surface.getMaxCoordinates()));
                 roverPosition = handler.getRoverPosition();
             }
         }
-        setRover(makeRover(roverPosition.coordinates(), roverPosition.direction()));
-        initialPos = roverPosition;
+        setRover(makeRover(roverPosition.getCoordinates(), roverPosition.getDirection()));
+        RoverPosition initialPos = roverPosition;
 
         exit = false;
         boolean errorOccurred = false;
         Command[] commandSequence;
         while(!exit) {
             if (errorOccurred) {
-                rover.setPosition(initialPos.coordinates());
-                rover.setDirection(initialPos.direction());
+                rover.setPosition(initialPos.getCoordinates());
+                rover.setDirection(initialPos.getDirection());
             }
             errorOccurred = false;
             int step = 0;

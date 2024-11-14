@@ -1,4 +1,4 @@
-import directions.Cardinal;
+import spatial.*;
 
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -53,7 +53,7 @@ public class InputHandler {
         }
     }
 
-    public Rover.RoverPosition validateRoverPosition(String input) {
+    public RoverPosition validateRoverPosition(String input) {
         if (input == null) {
             throw new NullPointerException("Input cannot be null");
         }
@@ -73,10 +73,10 @@ public class InputHandler {
             case "W" -> Cardinal.WEST;
             default -> throw new IllegalArgumentException("Direction must be one of N,E,S,W");
         };
-        return new Rover.RoverPosition(coordinate, direction);
+        return new RoverPosition(coordinate, direction);
     }
 
-    public Rover.RoverPosition getRoverPosition() {
+    public RoverPosition getRoverPosition() {
         promptRoverPosition();
         while (true) {
             try {

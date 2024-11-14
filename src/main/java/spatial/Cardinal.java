@@ -1,4 +1,4 @@
-package directions;
+package spatial;
 
 public enum Cardinal {
     NORTH,

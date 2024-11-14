@@ -1,4 +1,4 @@
-import java.util.ArrayList;
+package spatial;
 
 public class Coordinate {
     private int x;

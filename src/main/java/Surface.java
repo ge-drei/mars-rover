@@ -1,3 +1,5 @@
+import spatial.Coordinate;
+
 public class Surface {
     private Coordinate max;
 

@@ -1,7 +1,8 @@
-import directions.Cardinal;
+import spatial.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import spatial.Coordinate;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -92,31 +93,31 @@ class InputHandlerTest {
     @Test
     @DisplayName("validateRoverPosition returns a valid rover position if handed correctly formatted strings")
     void testValidateRoverPosition_validString() {
-        Rover.RoverPosition zeroZeroNorth = handler.validateRoverPosition("0 0 N");
-        Rover.RoverPosition zeroOneNorth = handler.validateRoverPosition("0 1 N");
-        Rover.RoverPosition tenTenNorth = handler.validateRoverPosition("10 10 N");
-        Rover.RoverPosition oneOneEast = handler.validateRoverPosition("1 1 E");
-        Rover.RoverPosition oneOneSouth = handler.validateRoverPosition("1 1 S");
-        Rover.RoverPosition oneOneWest = handler.validateRoverPosition("1 1 W");
+        RoverPosition zeroZeroNorth = handler.validateRoverPosition("0 0 N");
+        RoverPosition zeroOneNorth = handler.validateRoverPosition("0 1 N");
+        RoverPosition tenTenNorth = handler.validateRoverPosition("10 10 N");
+        RoverPosition oneOneEast = handler.validateRoverPosition("1 1 E");
+        RoverPosition oneOneSouth = handler.validateRoverPosition("1 1 S");
+        RoverPosition oneOneWest = handler.validateRoverPosition("1 1 W");
 
         assertAll(
-                () -> {assertEquals(new Coordinate(0, 0), zeroZeroNorth.coordinates());
-                    assertEquals(Cardinal.NORTH, zeroZeroNorth.direction());},
+                () -> {assertEquals(new Coordinate(0, 0), zeroZeroNorth.getCoordinates());
+                    assertEquals(Cardinal.NORTH, zeroZeroNorth.getDirection());},
 
-                () -> {assertEquals(new Coordinate(0, 1), zeroOneNorth.coordinates());
-                    assertEquals(Cardinal.NORTH, zeroOneNorth.direction());},
+                () -> {assertEquals(new Coordinate(0, 1), zeroOneNorth.getCoordinates());
+                    assertEquals(Cardinal.NORTH, zeroOneNorth.getDirection());},
 
-                () -> {assertEquals(new Coordinate(10, 10), tenTenNorth.coordinates());
-                    assertEquals(Cardinal.NORTH, zeroZeroNorth.direction());},
+                () -> {assertEquals(new Coordinate(10, 10), tenTenNorth.getCoordinates());
+                    assertEquals(Cardinal.NORTH, zeroZeroNorth.getDirection());},
 
-                () -> {assertEquals(new Coordinate(1, 1), oneOneEast.coordinates());
-                    assertEquals(Cardinal.EAST, oneOneEast.direction());},
+                () -> {assertEquals(new Coordinate(1, 1), oneOneEast.getCoordinates());
+                    assertEquals(Cardinal.EAST, oneOneEast.getDirection());},
 
-                () -> {assertEquals(new Coordinate(1, 1), oneOneSouth.coordinates());
-                    assertEquals(Cardinal.SOUTH, oneOneSouth.direction());},
+                () -> {assertEquals(new Coordinate(1, 1), oneOneSouth.getCoordinates());
+                    assertEquals(Cardinal.SOUTH, oneOneSouth.getDirection());},
 
-                () -> {assertEquals(new Coordinate(1, 1), oneOneWest.coordinates());
-                    assertEquals(Cardinal.WEST, oneOneWest.direction());}
+                () -> {assertEquals(new Coordinate(1, 1), oneOneWest.getCoordinates());
+                    assertEquals(Cardinal.WEST, oneOneWest.getDirection());}
         );
     }
 

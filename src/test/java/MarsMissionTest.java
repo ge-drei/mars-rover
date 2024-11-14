@@ -1,5 +1,6 @@
-import directions.Cardinal;
-import directions.Relative;
+import spatial.Cardinal;
+import spatial.Coordinate;
+import spatial.Relative;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

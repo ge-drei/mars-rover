@@ -1,7 +1,7 @@
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import directions.*;
+import spatial.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 class RoverTest {
