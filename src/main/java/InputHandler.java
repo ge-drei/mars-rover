@@ -43,7 +43,14 @@ public class InputHandler {
     }
 
     public Coordinate getMaxSurfaceSize() {
-        return validateMaxSurfaceSize(getInput());
+        promptMaxSurfaceSize();
+        while (true) {
+            try {
+                return validateMaxSurfaceSize(getInput());
+            } catch (IllegalArgumentException e) {
+                promptMaxSurfaceSize();
+            }
+        }
     }
 
     public Rover.RoverPosition validateRoverPosition(String input) {
@@ -70,7 +77,14 @@ public class InputHandler {
     }
 
     public Rover.RoverPosition getRoverPosition() {
-        return validateRoverPosition(getInput());
+        promptRoverPosition();
+        while (true) {
+            try {
+                return validateRoverPosition(getInput());
+            } catch (IllegalArgumentException e) {
+                promptRoverPosition();
+            }
+        }
     }
 
     public String validateCommandSequence(String input) {
@@ -87,7 +101,16 @@ public class InputHandler {
     }
 
     public Command[] getCommandSequence() {
-        String commandSequence = validateCommandSequence(getInput());
+        String commandSequence = "";
+        boolean exit = false;
+        while (!exit) {
+            try {
+                commandSequence = validateCommandSequence(getInput());
+                exit = true;
+            } catch (IllegalArgumentException e) {
+                promptCommandSequence();
+            }
+        }
         int length = commandSequence.length();
         Command[] commands = new Command[length];
         for (int i = 0; i < length; i++) {
@@ -107,5 +130,9 @@ public class InputHandler {
 
     public void out(String out) {
         System.out.println(out);
+    }
+
+    public void printStep(int step, Rover rover) {
+        System.out.printf("Step %d: Rover at %s, facing %s\n", step, rover.getPosition(), rover.getDirection());
     }
 }

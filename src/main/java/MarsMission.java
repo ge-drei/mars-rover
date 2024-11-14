@@ -42,73 +42,56 @@ public class MarsMission {
     }
 
     public void begin() {
-        boolean exit = false;
-        Coordinate maxSurfaceSize = null;
-        handler.promptMaxSurfaceSize();
-        while (!exit) {
-            try {
-                maxSurfaceSize = handler.getMaxSurfaceSize();
-                exit = true;
-            } catch (IllegalArgumentException e) {
-                handler.promptMaxSurfaceSize();
-            }
-        }
-        setSurface(makeSurface(maxSurfaceSize));
+        setSurface(makeSurface(handler.getMaxSurfaceSize()));
 
-        exit = false;
-        Rover.RoverPosition roverPosition = null;
-        handler.promptRoverPosition();
+        Rover.RoverPosition roverPosition = handler.getRoverPosition();
+        boolean exit = false;
         while (!exit) {
-            try {
-                roverPosition = handler.getRoverPosition();
-            } catch (IllegalArgumentException e) {
-                handler.promptRoverPosition();
-            }
             if (surface.isValidCoordinate(roverPosition.coordinates())) {
                 exit = true;
             } else {
                 handler.out(String.format("Position must be within maximum bounds %s", surface.getMaxCoordinates()));
-                handler.promptRoverPosition();
+                roverPosition = handler.getRoverPosition();
             }
         }
         setRover(makeRover(roverPosition.coordinates(), roverPosition.direction()));
         initialPos = roverPosition;
 
         exit = false;
+        boolean errorOccurred = false;
         Command[] commandSequence;
         while(!exit) {
-            boolean willBreak = false;
-            rover.setPosition(initialPos.coordinates());
-            rover.setDirection(initialPos.direction());
+            if (errorOccurred) {
+                rover.setPosition(initialPos.coordinates());
+                rover.setDirection(initialPos.direction());
+            }
+            errorOccurred = false;
+            int step = 0;
             handler.promptCommandSequence();
-            try {
-                commandSequence = handler.getCommandSequence();
-                int step = 1;
-                for (Command command: commandSequence) {
-                    switch (command) {
-                        case LEFT -> rover.setDirection(rover.getTurnDirection(Relative.LEFT));
-                        case RIGHT -> rover.setDirection(rover.getTurnDirection(Relative.RIGHT));
-                        case MOVE -> {
-                            Coordinate oldPos = rover.getPosition();
-                            Coordinate newPos = rover.calculateNewPosition();
-                            if (surface.isValidCoordinate(newPos)) {
-                                rover.setPosition(newPos);
-                                handler.out(newPos.toString());
-                            } else {
-                                handler.out(String.format("Error in step %d: Rover went out of bounds from %s to %s", step, oldPos, newPos));
-                                willBreak = true;
-                            }
+            commandSequence = handler.getCommandSequence();
+            handler.printStep(step, rover);
+            for (Command command: commandSequence) {
+                step++;
+                switch (command) {
+                    case LEFT -> rover.setDirection(rover.getTurnDirection(Relative.LEFT));
+                    case RIGHT -> rover.setDirection(rover.getTurnDirection(Relative.RIGHT));
+                    case MOVE -> {
+                        Coordinate oldPos = rover.getPosition();
+                        Coordinate newPos = rover.calculateNewPosition();
+                        if (surface.isValidCoordinate(newPos)) {
+                            rover.setPosition(newPos);
+                        } else {
+                            handler.out(String.format("Error in step %d: Rover went out of bounds from %s to %s", step, oldPos, newPos));
+                            errorOccurred = true;
                         }
                     }
-                    step++;
-                    if (willBreak) {
-                        break;
-                    }
                 }
-            } catch (IllegalArgumentException e) {
-                // Loops to command prompt above try block
+                handler.printStep(step, rover);
+                if (errorOccurred) {
+                    break;
+                }
             }
-            if (!willBreak) {
+            if (!errorOccurred) {
                 exit = true;
             }
         }
