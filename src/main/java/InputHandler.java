@@ -89,4 +89,8 @@ public class InputHandler {
     public String getCommandSequence() {
         return validateCommandSequence(getInput());
     }
+
+    public void out(String out) {
+        System.out.println(out);
+    }
 }
