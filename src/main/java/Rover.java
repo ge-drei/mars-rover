@@ -9,6 +9,11 @@ public class Rover {
         this.direction = direction;
     }
 
+    public Rover(RoverPosition position) {
+        this.position = position.coordinates;
+        this.direction = position.direction;
+    }
+
     public Coordinate getPosition() {
         return position;
     }
@@ -41,4 +46,6 @@ public class Rover {
             case WEST -> new Coordinate(position.getX() - 1, position.getY());
         };
     }
+
+    public record RoverPosition(Coordinate coordinates, Cardinal direction) {}
 }
