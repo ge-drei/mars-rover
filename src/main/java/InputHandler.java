@@ -86,8 +86,14 @@ public class InputHandler {
         return input;
     }
 
-    public String getCommandSequence() {
-        return validateCommandSequence(getInput());
+    public Command[] getCommandSequence() {
+        String commandSequence = validateCommandSequence(getInput());
+        int length = commandSequence.length();
+        Command[] commands = new Command[length];
+        for (int i = 0; i < length; i++) {
+            commands[i] = interpretCommand(commandSequence.charAt(i));
+        }
+        return commands;
     }
 
     public Command interpretCommand(char c) {

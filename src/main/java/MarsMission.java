@@ -75,16 +75,14 @@ public class MarsMission {
         initialPos = roverPosition;
 
         exit = false;
-        String commandSequence = "";
+        Command[] commandSequence;
         while(!exit) {
             boolean willBreak = false;
             handler.promptCommandSequence();
             try {
                 commandSequence = handler.getCommandSequence();
-
                 int step = 1;
-                for (char c: commandSequence.toCharArray()) {
-                    Command command = interpretCommand(c);
+                for (Command command: commandSequence) {
                     switch (command) {
                         case LEFT -> rover.setDirection(rover.getTurnDirection(Relative.LEFT));
                         case RIGHT -> rover.setDirection(rover.getTurnDirection(Relative.RIGHT));
