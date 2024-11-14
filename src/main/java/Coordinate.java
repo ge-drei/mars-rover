@@ -24,4 +24,9 @@ public class Coordinate {
 
         return x == oCoord.getX() && y == oCoord.getY();
     }
+
+    @Override
+    public String toString() {
+        return String.format("(%d,%d)", x, y);
+    }
 }
