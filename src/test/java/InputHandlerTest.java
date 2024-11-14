@@ -121,4 +121,42 @@ class InputHandlerTest {
         );
     }
 
+    @Test
+    @DisplayName("validateCommandSequence throws NullPointerException if handed null")
+    void testValidateCommandSequence_null() {
+        assertThrows(NullPointerException.class, () -> handler.validateCommandSequence(null));
+    }
+
+    @Test
+    @DisplayName("validateCommandSequence throws IllegalArgumentException if handed empty string")
+    void testValidateCommandSequence_emptyString() {
+        assertThrows(IllegalArgumentException.class, () -> handler.validateCommandSequence(""));
+    }
+
+    @Test
+    @DisplayName("validateCommandSequence throws IllegalArgumentException if handed improperly formatted strings")
+    void testValidateCommandSequence_invalidString() {
+        assertAll(
+                () -> assertThrows(IllegalArgumentException.class, () -> handler.validateCommandSequence("lrm")),
+                () -> assertThrows(IllegalArgumentException.class, () -> handler.validateCommandSequence(" LRM")),
+                () -> assertThrows(IllegalArgumentException.class, () -> handler.validateCommandSequence("LRM ")),
+                () -> assertThrows(IllegalArgumentException.class, () -> handler.validateCommandSequence("L,R,M")),
+                () -> assertThrows(IllegalArgumentException.class, () -> handler.validateCommandSequence("L R M")),
+                () -> assertThrows(IllegalArgumentException.class, () -> handler.validateCommandSequence("LRm")),
+                () -> assertThrows(IllegalArgumentException.class, () -> handler.validateCommandSequence("L5M2")),
+                () -> assertThrows(IllegalArgumentException.class, () -> handler.validateCommandSequence("L5 M2")),
+                () -> assertThrows(IllegalArgumentException.class, () -> handler.validateCommandSequence("L RM"))
+        );
+    }
+
+    @Test
+    @DisplayName("validateCommandSequence returns a valid coordinate if handed correctly formatted strings")
+    void testValidateCommandSequence_validString() {
+        assertAll(
+                () -> assertEquals("LRLRM", handler.validateCommandSequence("LRLRM")),
+                () -> assertEquals("MMMMMMMMMMMMM", handler.validateCommandSequence("MMMMMMMMMMMMM")),
+                () -> assertEquals("L", handler.validateCommandSequence("L"))
+        );
+    }
+
 }

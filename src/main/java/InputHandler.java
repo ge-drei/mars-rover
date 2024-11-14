@@ -60,4 +60,21 @@ public class InputHandler {
     public Rover.RoverPosition getRoverPosition() {
         return validateRoverPosition(getInput());
     }
+
+    public String validateCommandSequence(String input) {
+        if (input == null) {
+            throw new NullPointerException("Input cannot be null");
+        }
+
+        Pattern commandSequence = Pattern.compile("^[LRM]+$");
+        Matcher matcher = commandSequence.matcher(input);
+        if (!matcher.find()) {
+            throw new IllegalArgumentException("Command sequence can only consist of L, R, M");
+        }
+        return input;
+    }
+
+    public String getCommandSequence() {
+        return validateCommandSequence(getInput());
+    }
 }
