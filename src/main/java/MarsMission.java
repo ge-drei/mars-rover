@@ -78,6 +78,8 @@ public class MarsMission {
         Command[] commandSequence;
         while(!exit) {
             boolean willBreak = false;
+            rover.setPosition(initialPos.coordinates());
+            rover.setDirection(initialPos.direction());
             handler.promptCommandSequence();
             try {
                 commandSequence = handler.getCommandSequence();
