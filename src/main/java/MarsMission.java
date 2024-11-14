@@ -1,9 +1,9 @@
 public class MarsMission {
-    public Surface makeSurface(int x, int y) {
-        if (x <= 0 || y <= 0) {
+    public Surface makeSurface(Coordinate max) {
+        if (max.getX() <= 0 || max.getY() <= 0) {
             return null;
         } else {
-            return new Surface(x, y);
+            return new Surface(max);
         }
     }
 }

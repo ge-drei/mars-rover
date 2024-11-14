@@ -1,13 +1,13 @@
 public class Surface {
-    private int maxX;
-    private int maxY;
+    private Coordinate max;
 
-    public Surface(int x, int y) {
-        this.maxX = x;
-        this.maxY = y;
+    public Surface(Coordinate max) {
+        this.max = max;
     }
 
-    public boolean isValidCoordinate(int x, int y) {
-        return (x < 0 || x > maxX || y < 0 || y > maxY) ? false : true;
+    public boolean isValidCoordinate(Coordinate coordinate) {
+        int x = coordinate.getX();
+        int y = coordinate.getY();
+        return (x < 0 || x > max.getX() || y < 0 || y > max.getY()) ? false : true;
     }
 }
