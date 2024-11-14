@@ -15,6 +15,18 @@ public class InputHandler {
         return scanner.nextLine();
     }
 
+    public void promptMaxSurfaceSize() {
+        System.out.println("Input max surface size: (Format \"NUM NUM\")");
+    }
+
+    public void promptRoverPosition() {
+        System.out.println("Input initial rover position: (Format \"NUM NUM N/E/S/W\")");
+    }
+
+    public void promptCommandSequence() {
+        System.out.println("Input command sequence for rover: (Valid characters L, R, M)");
+    }
+
     public Coordinate validateMaxSurfaceSize(String input) {
         if (input == null) {
             throw new NullPointerException("Input cannot be null");
