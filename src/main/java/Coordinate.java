@@ -18,11 +18,9 @@ public class Coordinate {
             return true;
         }
 
-        if (!(o instanceof Coordinate)) {
+        if (!(o instanceof Coordinate oCoord)) {
             return false;
         }
-
-        Coordinate oCoord = (Coordinate) o;
 
         return x == oCoord.getX() && y == oCoord.getY();
     }
