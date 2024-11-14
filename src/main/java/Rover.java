@@ -16,6 +16,14 @@ public class Rover {
         return direction;
     }
 
+    public void setDirection(Cardinal direction) {
+        this.direction = direction;
+    }
+
+    public void setPosition(Coordinate position) {
+        this.position = position;
+    }
+
     public Cardinal getTurnDirection(Relative relative) {
         return switch (direction) {
             case NORTH -> (relative == Relative.LEFT) ? Cardinal.WEST : Cardinal.EAST;
