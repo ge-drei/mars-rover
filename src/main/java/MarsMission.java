@@ -32,15 +32,6 @@ public class MarsMission {
     public void setSurface(Surface surface) {this.surface = surface;}
     public void setRover(Rover rover) {this.rover = rover;}
 
-    public Command interpretCommand(char c) {
-        return switch (c) {
-            case 'L' -> Command.LEFT;
-            case 'R' -> Command.RIGHT;
-            case 'M' -> Command.MOVE;
-            default -> throw new IllegalArgumentException("Invalid character");
-        };
-    }
-
     public void turnRover(Relative relative) {
         rover.setDirection(rover.getTurnDirection(relative));
     }

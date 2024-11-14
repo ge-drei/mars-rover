@@ -102,23 +102,4 @@ class MarsMissionTest {
                 () -> {mission.setRover(rover5);
                     assertTrue(mission.isRoverStepValid());});
     }
-
-    @Test
-    @DisplayName("interpretCommand throws IllegalArgumentException if invalid character is passed")
-    void testInterpretCommand_invalidChar() {
-        assertAll( () -> assertThrows(IllegalArgumentException.class, () -> mission.interpretCommand('l')),
-                () -> assertThrows(IllegalArgumentException.class, () -> mission.interpretCommand('r')),
-                () -> assertThrows(IllegalArgumentException.class, () -> mission.interpretCommand('m')),
-                () -> assertThrows(IllegalArgumentException.class, () -> mission.interpretCommand('A')),
-                () -> assertThrows(IllegalArgumentException.class, () -> mission.interpretCommand('1')),
-                () -> assertThrows(IllegalArgumentException.class, () -> mission.interpretCommand(' ')));
-    }
-
-    @Test
-    @DisplayName("interpretCommand returns correct Command if valid character is passed")
-    void testInterpretCommand_validChar() {
-        assertAll(() -> assertEquals(Command.LEFT, mission.interpretCommand('L')),
-                () -> assertEquals(Command.RIGHT, mission.interpretCommand('R')),
-                () -> assertEquals(Command.MOVE, mission.interpretCommand('M')));
-    }
 }

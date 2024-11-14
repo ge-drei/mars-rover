@@ -64,7 +64,6 @@ class InputHandlerTest {
         assertThrows(IllegalArgumentException.class, () -> handler.validateRoverPosition(""));
     }
 
-
     @Test
     @DisplayName("validateRoverPosition throws IllegalArgumentException if handed improperly formatted strings")
     void testValidateRoverPosition_invalidString() {
@@ -159,4 +158,22 @@ class InputHandlerTest {
         );
     }
 
+    @Test
+    @DisplayName("interpretCommand throws IllegalArgumentException if invalid character is passed")
+    void testInterpretCommand_invalidChar() {
+        assertAll( () -> assertThrows(IllegalArgumentException.class, () -> handler.interpretCommand('l')),
+                () -> assertThrows(IllegalArgumentException.class, () -> handler.interpretCommand('r')),
+                () -> assertThrows(IllegalArgumentException.class, () -> handler.interpretCommand('m')),
+                () -> assertThrows(IllegalArgumentException.class, () -> handler.interpretCommand('A')),
+                () -> assertThrows(IllegalArgumentException.class, () -> handler.interpretCommand('1')),
+                () -> assertThrows(IllegalArgumentException.class, () -> handler.interpretCommand(' ')));
+    }
+
+    @Test
+    @DisplayName("interpretCommand returns correct Command if valid character is passed")
+    void testInterpretCommand_validChar() {
+        assertAll(() -> assertEquals(Command.LEFT, handler.interpretCommand('L')),
+                () -> assertEquals(Command.RIGHT, handler.interpretCommand('R')),
+                () -> assertEquals(Command.MOVE, handler.interpretCommand('M')));
+    }
 }

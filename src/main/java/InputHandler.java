@@ -90,6 +90,15 @@ public class InputHandler {
         return validateCommandSequence(getInput());
     }
 
+    public Command interpretCommand(char c) {
+        return switch (c) {
+            case 'L' -> Command.LEFT;
+            case 'R' -> Command.RIGHT;
+            case 'M' -> Command.MOVE;
+            default -> throw new IllegalArgumentException("Invalid character");
+        };
+    }
+
     public void out(String out) {
         System.out.println(out);
     }
