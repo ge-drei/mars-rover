@@ -5,6 +5,10 @@ public class Surface {
         this.max = max;
     }
 
+    public Coordinate getMaxCoordinates() {
+        return max;
+    }
+
     public boolean isValidCoordinate(Coordinate coordinate) {
         int x = coordinate.getX();
         int y = coordinate.getY();
