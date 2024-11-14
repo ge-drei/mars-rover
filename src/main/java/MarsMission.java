@@ -23,6 +23,15 @@ public class MarsMission {
         return new Rover(position, direction);
     }
 
+    public Command interpretCommand(char c) {
+        return switch (c) {
+            case 'L' -> Command.LEFT;
+            case 'R' -> Command.RIGHT;
+            case 'M' -> Command.MOVE;
+            default -> throw new IllegalArgumentException("Invalid character");
+        };
+    }
+
     public void setSurface(Surface surface) {this.surface = surface;}
     public void setRover(Rover rover) {this.rover = rover;}
 
