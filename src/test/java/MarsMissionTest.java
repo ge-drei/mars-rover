@@ -267,7 +267,25 @@ class MarsMissionTest {
         mission.setSurface(mission.makeSurface(new Coordinate(5, 5)));
         mission.setRover(mission.makeRover(new Coordinate(5, 5), Cardinal.N));
 
-        Command[] sequence = new Command[0];
+        Command[] sequence = {Command.MOVE};
         SequenceResult result = mission.executeCommandSequence(sequence);
+
+        assertAll(() -> assertFalse(result.succeeded()),
+                () -> assertEquals("Error in step 1: Rover went out of bounds from (5,5)", result.message())
+        );
+    }
+
+    @Test
+    @DisplayName("executeCommandSequence returns true and correct coordinates if valid sequence executed")
+    void testExecuteCommandSequence_validSequence() {
+        mission.setSurface(mission.makeSurface(new Coordinate(5, 5)));
+        mission.setRover(mission.makeRover(new Coordinate(5, 5), Cardinal.N));
+
+        Command[] sequence = {Command.LEFT, Command.LEFT, Command.MOVE, Command.RIGHT, Command.MOVE};
+        SequenceResult result = mission.executeCommandSequence(sequence);
+
+        assertAll(() -> assertTrue(result.succeeded()),
+                () -> assertEquals("4 4 W", result.message())
+        );
     }
 }
