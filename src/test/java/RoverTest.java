@@ -9,25 +9,25 @@ class RoverTest {
     @Test
     @DisplayName("Rover can be correctly initialised with a position and direction from coordinate constructor")
     void testGetPosition_GetDirection_coordinateConstructor() {
-        var rover_zeroZero_north = new Rover(new Coordinate(0, 0), Cardinal.NORTH);
-        var rover_minusOneMinusOne_south = new Rover(new Coordinate(-1, -1), Cardinal.SOUTH);
+        var rover_zeroZero_north = new Rover(new Coordinate(0, 0), Cardinal.N);
+        var rover_minusOneMinusOne_south = new Rover(new Coordinate(-1, -1), Cardinal.S);
         var coord_zeroZero = new Coordinate(0, 0);
         var coord_minusOneMinusOne = new Coordinate(-1, -1);
 
 
         assertAll(() -> assertEquals(coord_zeroZero, rover_zeroZero_north.getPosition()),
-                () -> assertEquals(Cardinal.NORTH, rover_zeroZero_north.getDirection()),
+                () -> assertEquals(Cardinal.N, rover_zeroZero_north.getDirection()),
 
                 () -> assertEquals(coord_minusOneMinusOne, rover_minusOneMinusOne_south.getPosition()),
-                () -> assertEquals(Cardinal.SOUTH, rover_minusOneMinusOne_south.getDirection())
+                () -> assertEquals(Cardinal.S, rover_minusOneMinusOne_south.getDirection())
         );
     }
 
     @Test
     @DisplayName("Rover can be correctly initialised with a position and direction from roverPosition constructor")
     void testGetPosition_GetDirection_roverPositionConstructor() {
-        var position_zeroZero_north = new RoverPosition(new Coordinate(0, 0), Cardinal.NORTH);
-        var position_minusOneMinusOne_south = new RoverPosition(new Coordinate(-1, -1), Cardinal.SOUTH);
+        var position_zeroZero_north = new RoverPosition(new Coordinate(0, 0), Cardinal.N);
+        var position_minusOneMinusOne_south = new RoverPosition(new Coordinate(-1, -1), Cardinal.S);
         var rover_zeroZero_north = new Rover(position_zeroZero_north);
         var rover_minusOneMinusOne_south = new Rover(position_minusOneMinusOne_south);
         var coord_zeroZero = new Coordinate(0, 0);
@@ -35,10 +35,10 @@ class RoverTest {
 
 
         assertAll(() -> assertEquals(coord_zeroZero, rover_zeroZero_north.getPosition()),
-                () -> assertEquals(Cardinal.NORTH, rover_zeroZero_north.getDirection()),
+                () -> assertEquals(Cardinal.N, rover_zeroZero_north.getDirection()),
 
                 () -> assertEquals(coord_minusOneMinusOne, rover_minusOneMinusOne_south.getPosition()),
-                () -> assertEquals(Cardinal.SOUTH, rover_minusOneMinusOne_south.getDirection())
+                () -> assertEquals(Cardinal.S, rover_minusOneMinusOne_south.getDirection())
         );
     }
 
@@ -46,22 +46,22 @@ class RoverTest {
     @DisplayName("Rover can calculate new direction after turning both left and right")
     void testGetTurnDirection() {
         var zeroZero = new Coordinate(0, 0);
-        var roverNorth = new Rover(zeroZero, Cardinal.NORTH);
-        var roverEast = new Rover(zeroZero, Cardinal.EAST);
-        var roverSouth = new Rover(zeroZero, Cardinal.SOUTH);
-        var roverWest = new Rover(zeroZero, Cardinal.WEST);
+        var roverNorth = new Rover(zeroZero, Cardinal.N);
+        var roverEast = new Rover(zeroZero, Cardinal.E);
+        var roverSouth = new Rover(zeroZero, Cardinal.S);
+        var roverWest = new Rover(zeroZero, Cardinal.W);
 
-        assertAll(() -> assertEquals(Cardinal.WEST, roverNorth.getTurnDirection(Relative.LEFT)),
-                () -> assertEquals(Cardinal.EAST, roverNorth.getTurnDirection(Relative.RIGHT)),
+        assertAll(() -> assertEquals(Cardinal.W, roverNorth.getTurnDirection(Relative.LEFT)),
+                () -> assertEquals(Cardinal.E, roverNorth.getTurnDirection(Relative.RIGHT)),
 
-                () -> assertEquals(Cardinal.NORTH, roverEast.getTurnDirection(Relative.LEFT)),
-                () -> assertEquals(Cardinal.SOUTH, roverEast.getTurnDirection(Relative.RIGHT)),
+                () -> assertEquals(Cardinal.N, roverEast.getTurnDirection(Relative.LEFT)),
+                () -> assertEquals(Cardinal.S, roverEast.getTurnDirection(Relative.RIGHT)),
 
-                () -> assertEquals(Cardinal.EAST, roverSouth.getTurnDirection(Relative.LEFT)),
-                () -> assertEquals(Cardinal.WEST, roverSouth.getTurnDirection(Relative.RIGHT)),
+                () -> assertEquals(Cardinal.E, roverSouth.getTurnDirection(Relative.LEFT)),
+                () -> assertEquals(Cardinal.W, roverSouth.getTurnDirection(Relative.RIGHT)),
 
-                () -> assertEquals(Cardinal.SOUTH, roverWest.getTurnDirection(Relative.LEFT)),
-                () -> assertEquals(Cardinal.NORTH, roverWest.getTurnDirection(Relative.RIGHT))
+                () -> assertEquals(Cardinal.S, roverWest.getTurnDirection(Relative.LEFT)),
+                () -> assertEquals(Cardinal.N, roverWest.getTurnDirection(Relative.RIGHT))
         );
     }
 
@@ -69,10 +69,10 @@ class RoverTest {
     @DisplayName("Rover can calculate new position after taking forwards step in any direction")
     void testCalculateNewPosition() {
         var zeroZero = new Coordinate(0, 0);
-        var roverNorth = new Rover(zeroZero, Cardinal.NORTH);
-        var roverEast = new Rover(zeroZero, Cardinal.EAST);
-        var roverSouth = new Rover(zeroZero, Cardinal.SOUTH);
-        var roverWest = new Rover(zeroZero, Cardinal.WEST);
+        var roverNorth = new Rover(zeroZero, Cardinal.N);
+        var roverEast = new Rover(zeroZero, Cardinal.E);
+        var roverSouth = new Rover(zeroZero, Cardinal.S);
+        var roverWest = new Rover(zeroZero, Cardinal.W);
 
         var northStep = roverNorth.calculateNewPosition();
         var eastStep = roverEast.calculateNewPosition();
@@ -90,19 +90,19 @@ class RoverTest {
     @DisplayName("Rover can correctly set new direction")
     void testSetDirection(){
         var zeroZero = new Coordinate(0, 0);
-        var roverNorth = new Rover(zeroZero, Cardinal.NORTH);
+        var roverNorth = new Rover(zeroZero, Cardinal.N);
 
         assertAll(() -> {
-            roverNorth.setDirection(Cardinal.EAST);
-            assertEquals(Cardinal.EAST, roverNorth.getDirection());
+            roverNorth.setDirection(Cardinal.E);
+            assertEquals(Cardinal.E, roverNorth.getDirection());
         },
                 () -> {
-            roverNorth.setDirection(Cardinal.SOUTH);
-            assertEquals(Cardinal.SOUTH, roverNorth.getDirection());
+            roverNorth.setDirection(Cardinal.S);
+            assertEquals(Cardinal.S, roverNorth.getDirection());
         },
                 () -> {
-            roverNorth.setDirection(Cardinal.WEST);
-            assertEquals(Cardinal.WEST, roverNorth.getDirection()
+            roverNorth.setDirection(Cardinal.W);
+            assertEquals(Cardinal.W, roverNorth.getDirection()
             );
         }
         );
@@ -112,7 +112,7 @@ class RoverTest {
     @DisplayName("Rover can correctly set new position")
     void testSetPosition() {
         var zeroZero = new Coordinate(0, 0);
-        var roverZeroZero = new Rover(zeroZero, Cardinal.NORTH);
+        var roverZeroZero = new Rover(zeroZero, Cardinal.N);
 
         assertAll(() -> {
             roverZeroZero.setPosition(new Coordinate(1, 1));

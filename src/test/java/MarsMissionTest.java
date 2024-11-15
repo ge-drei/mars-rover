@@ -38,17 +38,17 @@ class MarsMissionTest {
     @Test
     @DisplayName("makeRover returns a valid rover that contains the parameters passed in")
     void testMakeRover_validParameters() {
-        Rover rover = mission.makeRover(new Coordinate(0, 0), Cardinal.NORTH);
+        Rover rover = mission.makeRover(new Coordinate(0, 0), Cardinal.N);
 
         assertAll(() -> assertEquals(new Coordinate(0, 0), rover.getPosition()),
-                () -> assertEquals(Cardinal.NORTH, rover.getDirection())
+                () -> assertEquals(Cardinal.N, rover.getDirection())
         );
     }
 
     @Test
     @DisplayName("makeRover throws an IllegalArgumentException if the position or direction given is null")
     void testMakeRover_nullParameters() {
-        assertAll(() -> assertThrows(IllegalArgumentException.class, () -> mission.makeRover(null, Cardinal.NORTH)),
+        assertAll(() -> assertThrows(IllegalArgumentException.class, () -> mission.makeRover(null, Cardinal.N)),
                 () -> assertThrows(IllegalArgumentException.class, () -> mission.makeRover(new Coordinate(0, 0), null)),
                 () -> assertThrows(IllegalArgumentException.class, () -> mission.makeRover(null,null))
         );
@@ -65,7 +65,7 @@ class MarsMissionTest {
     @Test
     @DisplayName("setSurface correctly sets new surface")
     void testSetSurface_validSurface() {
-        Rover rover = new Rover(new Coordinate(5, 5), Cardinal.NORTH);
+        Rover rover = new Rover(new Coordinate(5, 5), Cardinal.N);
         Surface surface1 = new Surface(new Coordinate(6, 6));
         Surface surface2 = new Surface(new Coordinate(5, 5));
         mission.setRover(rover);
@@ -93,8 +93,8 @@ class MarsMissionTest {
     @DisplayName("setRover correctly sets new rover")
     void testSetRover_validRover() {
         Surface surface = new Surface(new Coordinate(5, 5));
-        Rover rover1 = new Rover(new Coordinate(4, 4), Cardinal.NORTH);
-        Rover rover2 = new Rover(new Coordinate(5, 5), Cardinal.NORTH);
+        Rover rover1 = new Rover(new Coordinate(4, 4), Cardinal.N);
+        Rover rover2 = new Rover(new Coordinate(5, 5), Cardinal.N);
         mission.setSurface(surface);
 
         mission.setRover(rover1);
@@ -112,12 +112,12 @@ class MarsMissionTest {
     @DisplayName("turnRover successfully makes rover turn")
     void testTurnRover() {
         Coordinate zeroZero = new Coordinate(0, 0);
-        Rover rover = mission.makeRover(zeroZero, Cardinal.NORTH);
+        Rover rover = mission.makeRover(zeroZero, Cardinal.N);
         mission.setRover(rover);
 
         mission.turnRover(Relative.LEFT);
 
-        assertEquals(Cardinal.WEST, rover.getDirection());
+        assertEquals(Cardinal.W, rover.getDirection());
     }
 
     @Test
@@ -133,10 +133,10 @@ class MarsMissionTest {
     void testIsRoverStepValid_invalidStep() {
         mission.setSurface(mission.makeSurface(new Coordinate(5, 5)));
 
-        Rover roverTopBound = mission.makeRover(new Coordinate(3,5), Cardinal.NORTH);
-        Rover roverLeftBound = mission.makeRover(new Coordinate(0, 3), Cardinal.WEST);
-        Rover roverBottomBound = mission.makeRover(new Coordinate(3, 0), Cardinal.SOUTH);
-        Rover roverRightBound = mission.makeRover(new Coordinate(5, 3), Cardinal.EAST);
+        Rover roverTopBound = mission.makeRover(new Coordinate(3,5), Cardinal.N);
+        Rover roverLeftBound = mission.makeRover(new Coordinate(0, 3), Cardinal.W);
+        Rover roverBottomBound = mission.makeRover(new Coordinate(3, 0), Cardinal.S);
+        Rover roverRightBound = mission.makeRover(new Coordinate(5, 3), Cardinal.E);
 
         assertAll(() -> {mission.setRover(roverTopBound);
                     assertFalse(mission.isRoverStepValid());},
@@ -154,11 +154,11 @@ class MarsMissionTest {
     void testIsRoverStepValid_validStep() {
         mission.setSurface(mission.makeSurface(new Coordinate(5, 5)));
 
-        Rover rover1 = mission.makeRover(new Coordinate(1,1), Cardinal.NORTH);
-        Rover rover2 = mission.makeRover(new Coordinate(0, 0), Cardinal.NORTH);
-        Rover rover3 = mission.makeRover(new Coordinate(5, 5), Cardinal.SOUTH);
-        Rover rover4 = mission.makeRover(new Coordinate(5, 3), Cardinal.WEST);
-        Rover rover5 = mission.makeRover(new Coordinate(4,4), Cardinal.EAST);
+        Rover rover1 = mission.makeRover(new Coordinate(1,1), Cardinal.N);
+        Rover rover2 = mission.makeRover(new Coordinate(0, 0), Cardinal.N);
+        Rover rover3 = mission.makeRover(new Coordinate(5, 5), Cardinal.S);
+        Rover rover4 = mission.makeRover(new Coordinate(5, 3), Cardinal.W);
+        Rover rover5 = mission.makeRover(new Coordinate(4,4), Cardinal.E);
 
         assertAll(() -> {mission.setRover(rover1);
                     assertTrue(mission.isRoverStepValid());},
@@ -180,7 +180,7 @@ class MarsMissionTest {
         MarsMission surfaceNoRover = new MarsMission();
         surfaceNoRover.setSurface(surface);
 
-        Rover rover = new Rover(new Coordinate(0, 0), Cardinal.NORTH);
+        Rover rover = new Rover(new Coordinate(0, 0), Cardinal.N);
         MarsMission roverNoSurface = new MarsMission();
         roverNoSurface.setRover(rover);
 
@@ -197,7 +197,7 @@ class MarsMissionTest {
         MarsMission surfaceNoRover = new MarsMission();
         surfaceNoRover.setSurface(surface);
 
-        Rover rover = new Rover(new Coordinate(0, 0), Cardinal.NORTH);
+        Rover rover = new Rover(new Coordinate(0, 0), Cardinal.N);
         MarsMission roverNoSurface = new MarsMission();
         roverNoSurface.setRover(rover);
 
@@ -212,7 +212,7 @@ class MarsMissionTest {
     @DisplayName("executeRoverStep returns true when given valid commands")
     void testExecuteRoverStep_validCommand() {
         mission.setSurface(mission.makeSurface(new Coordinate(5, 5)));
-        mission.setRover(mission.makeRover(new Coordinate(0, 0), Cardinal.NORTH));
+        mission.setRover(mission.makeRover(new Coordinate(0, 0), Cardinal.N));
 
         assertAll(() -> assertTrue(mission.executeRoverStep(Command.LEFT)),
                 () -> assertTrue(mission.executeRoverStep(Command.RIGHT)),
@@ -224,7 +224,7 @@ class MarsMissionTest {
     @DisplayName("executeRoverStep returns false when given command that would take rover out of bounds")
     void testExecuteRoverStep_invalidCommand() {
         mission.setSurface(mission.makeSurface(new Coordinate(5, 5)));
-        mission.setRover(mission.makeRover(new Coordinate(5, 5), Cardinal.NORTH));
+        mission.setRover(mission.makeRover(new Coordinate(5, 5), Cardinal.N));
 
         assertFalse(mission.executeRoverStep(Command.MOVE));
     }
@@ -233,7 +233,7 @@ class MarsMissionTest {
     @DisplayName("executeRoverStep throws IllegalArgumentException if command is null")
     void testExecuteRoverStep_nullCommand() {
         mission.setSurface(mission.makeSurface(new Coordinate(5, 5)));
-        mission.setRover(mission.makeRover(new Coordinate(5, 5), Cardinal.NORTH));
+        mission.setRover(mission.makeRover(new Coordinate(5, 5), Cardinal.N));
 
         assertThrows(IllegalArgumentException.class, () -> mission.executeRoverStep(null));
     }

@@ -140,12 +140,12 @@ public class MarsMission {
             int step = 0;
             handler.promptCommandSequence();
             commandSequence = handler.getCommandSequence();
-            handler.printStep(step, rover);
+//            handler.printStep(step, rover);
             for (Command command: commandSequence) {
                 step++;
                 falseIfError = executeRoverStep(command);
                 if (falseIfError) {
-                    handler.printStep(step, rover);
+//                    handler.printStep(step, rover);
                 } else {
                     handler.out(String.format("Error in step %d: Rover went out of bounds from %s",
                             step, rover.getPosition()));
@@ -155,6 +155,8 @@ public class MarsMission {
             if (falseIfError) {
                 exit = true;
             }
+            Coordinate finalPosition = rover.getPosition();
+            handler.out(String.format("%d %d %s",finalPosition.getX(), finalPosition.getY(), rover.getDirection()));
         }
     }
 }

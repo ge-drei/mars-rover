@@ -31,19 +31,19 @@ public class Rover {
 
     public Cardinal getTurnDirection(Relative relative) {
         return switch (direction) {
-            case NORTH -> (relative == Relative.LEFT) ? Cardinal.WEST : Cardinal.EAST;
-            case EAST -> (relative == Relative.LEFT) ? Cardinal.NORTH : Cardinal.SOUTH;
-            case SOUTH -> (relative == Relative.LEFT) ? Cardinal.EAST : Cardinal.WEST;
-            case WEST -> (relative == Relative.LEFT) ? Cardinal.SOUTH : Cardinal.NORTH;
+            case N -> (relative == Relative.LEFT) ? Cardinal.W : Cardinal.E;
+            case E -> (relative == Relative.LEFT) ? Cardinal.N : Cardinal.S;
+            case S -> (relative == Relative.LEFT) ? Cardinal.E : Cardinal.W;
+            case W -> (relative == Relative.LEFT) ? Cardinal.S : Cardinal.N;
         };
     }
 
     public Coordinate calculateNewPosition() {
         return switch (direction) {
-            case NORTH -> new Coordinate(position.getX(), position.getY() + 1);
-            case EAST -> new Coordinate(position.getX() + 1, position.getY());
-            case SOUTH -> new Coordinate(position.getX(), position.getY() - 1);
-            case WEST -> new Coordinate(position.getX() - 1, position.getY());
+            case N -> new Coordinate(position.getX(), position.getY() + 1);
+            case E -> new Coordinate(position.getX() + 1, position.getY());
+            case S -> new Coordinate(position.getX(), position.getY() - 1);
+            case W -> new Coordinate(position.getX() - 1, position.getY());
         };
     }
 }

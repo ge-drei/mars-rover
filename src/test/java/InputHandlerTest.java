@@ -112,22 +112,22 @@ class InputHandlerTest {
 
         assertAll(
                 () -> {assertEquals(new Coordinate(0, 0), zeroZeroNorth.getCoordinates());
-                    assertEquals(Cardinal.NORTH, zeroZeroNorth.getDirection());},
+                    assertEquals(Cardinal.N, zeroZeroNorth.getDirection());},
 
                 () -> {assertEquals(new Coordinate(0, 1), zeroOneNorth.getCoordinates());
-                    assertEquals(Cardinal.NORTH, zeroOneNorth.getDirection());},
+                    assertEquals(Cardinal.N, zeroOneNorth.getDirection());},
 
                 () -> {assertEquals(new Coordinate(10, 10), tenTenNorth.getCoordinates());
-                    assertEquals(Cardinal.NORTH, zeroZeroNorth.getDirection());},
+                    assertEquals(Cardinal.N, zeroZeroNorth.getDirection());},
 
                 () -> {assertEquals(new Coordinate(1, 1), oneOneEast.getCoordinates());
-                    assertEquals(Cardinal.EAST, oneOneEast.getDirection());},
+                    assertEquals(Cardinal.E, oneOneEast.getDirection());},
 
                 () -> {assertEquals(new Coordinate(1, 1), oneOneSouth.getCoordinates());
-                    assertEquals(Cardinal.SOUTH, oneOneSouth.getDirection());},
+                    assertEquals(Cardinal.S, oneOneSouth.getDirection());},
 
                 () -> {assertEquals(new Coordinate(1, 1), oneOneWest.getCoordinates());
-                    assertEquals(Cardinal.WEST, oneOneWest.getDirection());}
+                    assertEquals(Cardinal.W, oneOneWest.getDirection());}
         );
     }
 

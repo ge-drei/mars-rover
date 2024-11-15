@@ -67,10 +67,10 @@ public class InputHandler {
         String[] positionData = input.split(" ");
         Coordinate coordinate = new Coordinate(Integer.parseInt(positionData[0]), Integer.parseInt(positionData[1]));
         Cardinal direction = switch (positionData[2]) {
-            case "N" -> Cardinal.NORTH;
-            case "E" -> Cardinal.EAST;
-            case "S" -> Cardinal.SOUTH;
-            case "W" -> Cardinal.WEST;
+            case "N" -> Cardinal.N;
+            case "E" -> Cardinal.E;
+            case "S" -> Cardinal.S;
+            case "W" -> Cardinal.W;
             default -> throw new IllegalArgumentException("Direction must be one of N,E,S,W");
         };
         return new RoverPosition(coordinate, direction);
