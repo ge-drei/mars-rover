@@ -34,7 +34,8 @@ class CoordinateTest {
                 () -> assertEquals(0, oneZero.getY()),
 
                 () -> assertEquals(1, oneOne.getX()),
-                () -> assertEquals(1, oneOne.getY()));
+                () -> assertEquals(1, oneOne.getY())
+        );
     }
 
     @Test
@@ -49,7 +50,8 @@ class CoordinateTest {
 
                 () -> assertEquals(minusOneZero, minusOneZero),
                 () -> assertTrue(minusOneZero.equals(minusOneZero)),
-                () -> assertTrue(minusOneZero == minusOneZero));
+                () -> assertTrue(minusOneZero == minusOneZero)
+        );
     }
 
     @Test
@@ -95,6 +97,20 @@ class CoordinateTest {
 
         assertAll(() -> assertFalse(zeroZero.equals(object)),
                 () -> assertFalse(zeroZero.equals(list)),
-                () -> assertFalse(zeroZero.equals(objectNull)));
+                () -> assertFalse(zeroZero.equals(objectNull))
+        );
+    }
+
+    @Test
+    @DisplayName("toString method returns correctly-formatted string")
+    void testToString() {
+        var zeroZero = new Coordinate(0, 0);
+        var fiveFive = new Coordinate(5, 5);
+        var minusOneMinusOne = new Coordinate(-1, -1);
+
+        assertAll(() -> assertEquals("(0,0)", zeroZero.toString()),
+                () -> assertEquals("(5,5)", fiveFive.toString()),
+                () -> assertEquals("(-1,-1)", minusOneMinusOne.toString())
+        );
     }
 }

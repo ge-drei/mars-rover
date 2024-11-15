@@ -28,8 +28,21 @@ public class MarsMission {
         return new Rover(position, direction);
     }
 
-    public void setSurface(Surface surface) {this.surface = surface;}
-    public void setRover(Rover rover) {this.rover = rover;}
+    public void setSurface(Surface surface) {
+        if (surface != null) {
+            this.surface = surface;
+        } else {
+            throw new IllegalArgumentException("Surface cannot be null");
+        }
+    }
+
+    public void setRover(Rover rover) {
+        if (rover != null) {
+            this.rover = rover;
+        } else {
+            throw new IllegalArgumentException("Rover cannot be null");
+        }
+    }
 
     public void turnRover(Relative relative) {
         rover.setDirection(rover.getTurnDirection(relative));
@@ -80,7 +93,8 @@ public class MarsMission {
                         if (surface.isValidCoordinate(newPos)) {
                             rover.setPosition(newPos);
                         } else {
-                            handler.out(String.format("Error in step %d: Rover went out of bounds from %s to %s", step, oldPos, newPos));
+                            handler.out(String.format("Error in step %d: Rover went out of bounds from %s to %s",
+                                    step, oldPos, newPos));
                             errorOccurred = true;
                         }
                     }

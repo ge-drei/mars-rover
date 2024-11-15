@@ -43,4 +43,14 @@ class SurfaceTest {
                 () -> assertTrue(surface.isValidCoordinate(new Coordinate(3, 5))),
                 () -> assertTrue(surface.isValidCoordinate(new Coordinate(5, 5))));
     }
+
+    @Test
+    @DisplayName("getMaxCoordinates returns coordinate at top-right of valid grid")
+    void testGetMaxCoordinates_getsMaxCoordinates() {
+        Surface surface_fiveFive = new Surface(new Coordinate(5, 5));
+        Surface surface_zeroZero = new Surface(new Coordinate(0, 0));
+
+        assertAll(() -> assertEquals(new Coordinate(5, 5), surface_fiveFive.getMaxCoordinates()),
+                () -> assertEquals(new Coordinate(0, 0), surface_zeroZero.getMaxCoordinates()));
+    }
 }

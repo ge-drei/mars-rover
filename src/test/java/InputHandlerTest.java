@@ -44,6 +44,16 @@ class InputHandlerTest {
     }
 
     @Test
+    @DisplayName("validateMaxSurfaceSize throws IllegalArgumentException if handed string of negative numbers")
+    void testValidateMaxSurfaceSize_invalidNegativeNumbers() {
+        assertAll(
+                () -> assertThrows(IllegalArgumentException.class, () -> handler.validateMaxSurfaceSize("-1 -5")),
+                () -> assertThrows(IllegalArgumentException.class, () -> handler.validateMaxSurfaceSize("1 -5")),
+                () -> assertThrows(IllegalArgumentException.class, () -> handler.validateMaxSurfaceSize("-1 5"))
+        );
+    }
+
+    @Test
     @DisplayName("validateMaxSurfaceSize returns a valid coordinate if handed correctly formatted strings")
     void testValidateMaxSurfaceSize_validString() {
         assertAll(
@@ -167,7 +177,8 @@ class InputHandlerTest {
                 () -> assertThrows(IllegalArgumentException.class, () -> handler.interpretCommand('m')),
                 () -> assertThrows(IllegalArgumentException.class, () -> handler.interpretCommand('A')),
                 () -> assertThrows(IllegalArgumentException.class, () -> handler.interpretCommand('1')),
-                () -> assertThrows(IllegalArgumentException.class, () -> handler.interpretCommand(' ')));
+                () -> assertThrows(IllegalArgumentException.class, () -> handler.interpretCommand(' '))
+        );
     }
 
     @Test
@@ -175,6 +186,7 @@ class InputHandlerTest {
     void testInterpretCommand_validChar() {
         assertAll(() -> assertEquals(Command.LEFT, handler.interpretCommand('L')),
                 () -> assertEquals(Command.RIGHT, handler.interpretCommand('R')),
-                () -> assertEquals(Command.MOVE, handler.interpretCommand('M')));
+                () -> assertEquals(Command.MOVE, handler.interpretCommand('M'))
+        );
     }
 }
