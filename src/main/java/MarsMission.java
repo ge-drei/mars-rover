@@ -1,3 +1,4 @@
+import rover.*;
 import spatial.*;
 import surface.BasicSurface;
 import surface.Surface;
@@ -27,7 +28,7 @@ public class MarsMission {
             throw new IllegalArgumentException("Rover direction cannot be null");
         }
 
-        return new Rover(position, direction);
+        return new BasicRover(position, direction);
     }
 
     public Rover makeRover(RoverPosition position) {
@@ -35,7 +36,7 @@ public class MarsMission {
             throw new IllegalArgumentException("Rover position cannot be null");
         }
 
-        return new Rover(position);
+        return new BasicRover(position);
     }
 
     public void setSurface(Surface surface) {

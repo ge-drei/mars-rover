@@ -1,6 +1,7 @@
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import rover.BasicRover;
 import spatial.*;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -9,8 +10,8 @@ class RoverTest {
     @Test
     @DisplayName("Rover can be correctly initialised with a position and direction from coordinate constructor")
     void testGetPosition_GetDirection_coordinateConstructor() {
-        var rover_zeroZero_north = new Rover(new Coordinate(0, 0), Cardinal.N);
-        var rover_minusOneMinusOne_south = new Rover(new Coordinate(-1, -1), Cardinal.S);
+        var rover_zeroZero_north = new BasicRover(new Coordinate(0, 0), Cardinal.N);
+        var rover_minusOneMinusOne_south = new BasicRover(new Coordinate(-1, -1), Cardinal.S);
         var coord_zeroZero = new Coordinate(0, 0);
         var coord_minusOneMinusOne = new Coordinate(-1, -1);
 
@@ -28,8 +29,8 @@ class RoverTest {
     void testGetPosition_GetDirection_roverPositionConstructor() {
         var position_zeroZero_north = new RoverPosition(new Coordinate(0, 0), Cardinal.N);
         var position_minusOneMinusOne_south = new RoverPosition(new Coordinate(-1, -1), Cardinal.S);
-        var rover_zeroZero_north = new Rover(position_zeroZero_north);
-        var rover_minusOneMinusOne_south = new Rover(position_minusOneMinusOne_south);
+        var rover_zeroZero_north = new BasicRover(position_zeroZero_north);
+        var rover_minusOneMinusOne_south = new BasicRover(position_minusOneMinusOne_south);
         var coord_zeroZero = new Coordinate(0, 0);
         var coord_minusOneMinusOne = new Coordinate(-1, -1);
 
@@ -46,10 +47,10 @@ class RoverTest {
     @DisplayName("Rover can calculate new direction after turning both left and right")
     void testGetTurnDirection() {
         var zeroZero = new Coordinate(0, 0);
-        var roverNorth = new Rover(zeroZero, Cardinal.N);
-        var roverEast = new Rover(zeroZero, Cardinal.E);
-        var roverSouth = new Rover(zeroZero, Cardinal.S);
-        var roverWest = new Rover(zeroZero, Cardinal.W);
+        var roverNorth = new BasicRover(zeroZero, Cardinal.N);
+        var roverEast = new BasicRover(zeroZero, Cardinal.E);
+        var roverSouth = new BasicRover(zeroZero, Cardinal.S);
+        var roverWest = new BasicRover(zeroZero, Cardinal.W);
 
         assertAll(() -> assertEquals(Cardinal.W, roverNorth.getTurnDirection(Relative.LEFT)),
                 () -> assertEquals(Cardinal.E, roverNorth.getTurnDirection(Relative.RIGHT)),
@@ -69,10 +70,10 @@ class RoverTest {
     @DisplayName("Rover can calculate new position after taking forwards step in any direction")
     void testCalculateNewPosition() {
         var zeroZero = new Coordinate(0, 0);
-        var roverNorth = new Rover(zeroZero, Cardinal.N);
-        var roverEast = new Rover(zeroZero, Cardinal.E);
-        var roverSouth = new Rover(zeroZero, Cardinal.S);
-        var roverWest = new Rover(zeroZero, Cardinal.W);
+        var roverNorth = new BasicRover(zeroZero, Cardinal.N);
+        var roverEast = new BasicRover(zeroZero, Cardinal.E);
+        var roverSouth = new BasicRover(zeroZero, Cardinal.S);
+        var roverWest = new BasicRover(zeroZero, Cardinal.W);
 
         var northStep = roverNorth.calculateNewPosition();
         var eastStep = roverEast.calculateNewPosition();
@@ -90,7 +91,7 @@ class RoverTest {
     @DisplayName("Rover can correctly set new direction")
     void testSetDirection(){
         var zeroZero = new Coordinate(0, 0);
-        var roverNorth = new Rover(zeroZero, Cardinal.N);
+        var roverNorth = new BasicRover(zeroZero, Cardinal.N);
 
         assertAll(() -> {
             roverNorth.setDirection(Cardinal.E);
@@ -112,7 +113,7 @@ class RoverTest {
     @DisplayName("Rover can correctly set new position")
     void testSetPosition() {
         var zeroZero = new Coordinate(0, 0);
-        var roverZeroZero = new Rover(zeroZero, Cardinal.N);
+        var roverZeroZero = new BasicRover(zeroZero, Cardinal.N);
 
         assertAll(() -> {
             roverZeroZero.setPosition(new Coordinate(1, 1));

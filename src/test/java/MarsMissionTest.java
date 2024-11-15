@@ -1,3 +1,4 @@
+import rover.*;
 import spatial.Cardinal;
 import spatial.Coordinate;
 import spatial.Relative;
@@ -84,7 +85,7 @@ class MarsMissionTest {
     @Test
     @DisplayName("setSurface correctly sets new surface")
     void testSetSurface_validSurface() {
-        Rover rover = new Rover(new Coordinate(5, 5), Cardinal.N);
+        Rover rover = new BasicRover(new Coordinate(5, 5), Cardinal.N);
         Surface surface1 = new BasicSurface(new Coordinate(6, 6));
         Surface surface2 = new BasicSurface(new Coordinate(5, 5));
         mission.setRover(rover);
@@ -112,8 +113,8 @@ class MarsMissionTest {
     @DisplayName("setRover correctly sets new rover")
     void testSetRover_validRover() {
         Surface surface = new BasicSurface(new Coordinate(5, 5));
-        Rover rover1 = new Rover(new Coordinate(4, 4), Cardinal.N);
-        Rover rover2 = new Rover(new Coordinate(5, 5), Cardinal.N);
+        Rover rover1 = new BasicRover(new Coordinate(4, 4), Cardinal.N);
+        Rover rover2 = new BasicRover(new Coordinate(5, 5), Cardinal.N);
         mission.setSurface(surface);
 
         mission.setRover(rover1);
@@ -199,7 +200,7 @@ class MarsMissionTest {
         MarsMission surfaceNoRover = new MarsMission();
         surfaceNoRover.setSurface(surface);
 
-        Rover rover = new Rover(new Coordinate(0, 0), Cardinal.N);
+        Rover rover = new BasicRover(new Coordinate(0, 0), Cardinal.N);
         MarsMission roverNoSurface = new MarsMission();
         roverNoSurface.setRover(rover);
 
@@ -216,7 +217,7 @@ class MarsMissionTest {
         MarsMission surfaceNoRover = new MarsMission();
         surfaceNoRover.setSurface(surface);
 
-        Rover rover = new Rover(new Coordinate(0, 0), Cardinal.N);
+        Rover rover = new BasicRover(new Coordinate(0, 0), Cardinal.N);
         MarsMission roverNoSurface = new MarsMission();
         roverNoSurface.setRover(rover);
 

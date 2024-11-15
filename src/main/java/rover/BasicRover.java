@@ -1,15 +1,17 @@
+package rover;
+
 import spatial.*;
 
-public class Rover {
+public class BasicRover implements Rover{
     private Coordinate position;
     private Cardinal direction;
 
-    public Rover(Coordinate position, Cardinal direction) {
+    public BasicRover(Coordinate position, Cardinal direction) {
         this.position = position;
         this.direction = direction;
     }
 
-    public Rover(RoverPosition position) {
+    public BasicRover(RoverPosition position) {
         this.position = position.getCoordinates();
         this.direction = position.getDirection();
     }
