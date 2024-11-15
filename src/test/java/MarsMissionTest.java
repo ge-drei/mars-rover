@@ -189,4 +189,52 @@ class MarsMissionTest {
                 () -> assertThrows(IllegalStateException.class, () -> roverNoSurface.isRoverStepValid())
         );
     }
+
+    @Test
+    @DisplayName("executeRoverStep throws IllegalStateException if called when rover and/or surface is uninitialised")
+    void testExecuteRoverStep_illegalStates() {
+        Surface surface = new Surface(new Coordinate(0, 0));
+        MarsMission surfaceNoRover = new MarsMission();
+        surfaceNoRover.setSurface(surface);
+
+        Rover rover = new Rover(new Coordinate(0, 0), Cardinal.NORTH);
+        MarsMission roverNoSurface = new MarsMission();
+        roverNoSurface.setRover(rover);
+
+        assertAll(() -> assertThrows(IllegalStateException.class, () -> mission.executeRoverStep(Command.LEFT)),
+                () -> assertThrows(IllegalStateException.class, () -> surfaceNoRover.executeRoverStep(Command.RIGHT)),
+                () -> assertThrows(IllegalStateException.class, () -> roverNoSurface.executeRoverStep(Command.MOVE))
+        );
+
+    }
+
+    @Test
+    @DisplayName("executeRoverStep returns true when given valid commands")
+    void testExecuteRoverStep_validCommand() {
+        mission.setSurface(mission.makeSurface(new Coordinate(5, 5)));
+        mission.setRover(mission.makeRover(new Coordinate(0, 0), Cardinal.NORTH));
+
+        assertAll(() -> assertTrue(mission.executeRoverStep(Command.LEFT)),
+                () -> assertTrue(mission.executeRoverStep(Command.RIGHT)),
+                () -> assertTrue(mission.executeRoverStep(Command.MOVE))
+        );
+    }
+
+    @Test
+    @DisplayName("executeRoverStep returns false when given command that would take rover out of bounds")
+    void testExecuteRoverStep_invalidCommand() {
+        mission.setSurface(mission.makeSurface(new Coordinate(5, 5)));
+        mission.setRover(mission.makeRover(new Coordinate(5, 5), Cardinal.NORTH));
+
+        assertFalse(mission.executeRoverStep(Command.MOVE));
+    }
+
+    @Test
+    @DisplayName("executeRoverStep throws IllegalArgumentException if command is null")
+    void testExecuteRoverStep_nullCommand() {
+        mission.setSurface(mission.makeSurface(new Coordinate(5, 5)));
+        mission.setRover(mission.makeRover(new Coordinate(5, 5), Cardinal.NORTH));
+
+        assertThrows(IllegalArgumentException.class, () -> mission.executeRoverStep(null));
+    }
 }

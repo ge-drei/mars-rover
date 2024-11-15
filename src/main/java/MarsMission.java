@@ -71,6 +71,46 @@ public class MarsMission {
         return surface.isValidCoordinate(destination);
     }
 
+    public boolean executeRoverStep(Command command) {
+        if (command == null) {
+            throw new IllegalArgumentException("Command cannot be null");
+        }
+        boolean somethingIsNull = false;
+        String illegalStateMessage = "";
+        if (rover == null) {
+            somethingIsNull = true;
+            illegalStateMessage += "Rover has not been initialised correctly. ";
+        }
+        if (surface == null) {
+            somethingIsNull = true;
+            illegalStateMessage += "Surface has not been initialised correctly.";
+        }
+
+        if (somethingIsNull) {
+            throw new IllegalStateException(illegalStateMessage);
+        }
+        switch (command) {
+            case LEFT -> {
+                rover.setDirection(rover.getTurnDirection(Relative.LEFT));
+                return true;
+            }
+            case RIGHT -> {
+                rover.setDirection(rover.getTurnDirection(Relative.RIGHT));
+                return true;
+            }
+            case MOVE -> {
+                Coordinate newPos = rover.calculateNewPosition();
+                if (surface.isValidCoordinate(newPos)) {
+                    rover.setPosition(newPos);
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        }
+        return false; // Command not recognised
+    }
+
     public void begin() {
         setSurface(makeSurface(handler.getMaxSurfaceSize()));
 
@@ -89,41 +129,30 @@ public class MarsMission {
         RoverPosition initialPos = roverPosition;
 
         exit = false;
-        boolean errorOccurred = false;
+        boolean falseIfError = true;
         Command[] commandSequence;
         while(!exit) {
-            if (errorOccurred) {
+            if (!falseIfError) {
                 rover.setPosition(initialPos.getCoordinates());
                 rover.setDirection(initialPos.getDirection());
             }
-            errorOccurred = false;
+            falseIfError = true;
             int step = 0;
             handler.promptCommandSequence();
             commandSequence = handler.getCommandSequence();
             handler.printStep(step, rover);
             for (Command command: commandSequence) {
                 step++;
-                switch (command) {
-                    case LEFT -> rover.setDirection(rover.getTurnDirection(Relative.LEFT));
-                    case RIGHT -> rover.setDirection(rover.getTurnDirection(Relative.RIGHT));
-                    case MOVE -> {
-                        Coordinate oldPos = rover.getPosition();
-                        Coordinate newPos = rover.calculateNewPosition();
-                        if (surface.isValidCoordinate(newPos)) {
-                            rover.setPosition(newPos);
-                        } else {
-                            handler.out(String.format("Error in step %d: Rover went out of bounds from %s to %s",
-                                    step, oldPos, newPos));
-                            errorOccurred = true;
-                        }
-                    }
-                }
-                handler.printStep(step, rover);
-                if (errorOccurred) {
+                falseIfError = executeRoverStep(command);
+                if (falseIfError) {
+                    handler.printStep(step, rover);
+                } else {
+                    handler.out(String.format("Error in step %d: Rover went out of bounds from %s",
+                            step, rover.getPosition()));
                     break;
                 }
             }
-            if (!errorOccurred) {
+            if (falseIfError) {
                 exit = true;
             }
         }
