@@ -45,10 +45,28 @@ public class MarsMission {
     }
 
     public void turnRover(Relative relative) {
+        if (rover == null) {
+            throw new IllegalStateException("Rover has not been initialised correctly.");
+        }
+
         rover.setDirection(rover.getTurnDirection(relative));
     }
 
     public boolean isRoverStepValid() {
+        boolean somethingIsNull = false;
+        String illegalStateMessage = "";
+        if (rover == null) {
+            somethingIsNull = true;
+            illegalStateMessage += "Rover has not been initialised correctly. ";
+        }
+        if (surface == null) {
+            somethingIsNull = true;
+            illegalStateMessage += "Surface has not been initialised correctly.";
+        }
+        if (somethingIsNull) {
+            throw new IllegalStateException(illegalStateMessage);
+        }
+
         Coordinate destination = rover.calculateNewPosition();
         return surface.isValidCoordinate(destination);
     }

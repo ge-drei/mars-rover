@@ -121,6 +121,14 @@ class MarsMissionTest {
     }
 
     @Test
+    @DisplayName("turnRover throws IllegalStateException if called when rover is uninitialised")
+    void testTurnRover_noRover() {
+        assertAll(() -> assertThrows(IllegalStateException.class, () -> mission.turnRover(Relative.LEFT)),
+                () -> assertThrows(IllegalStateException.class, () -> mission.turnRover(Relative.RIGHT))
+        );
+    }
+
+    @Test
     @DisplayName("isRoverStepValid returns false if rover would move to invalid location")
     void testIsRoverStepValid_invalidStep() {
         mission.setSurface(mission.makeSurface(new Coordinate(5, 5)));
@@ -162,6 +170,23 @@ class MarsMissionTest {
                     assertTrue(mission.isRoverStepValid());},
                 () -> {mission.setRover(rover5);
                     assertTrue(mission.isRoverStepValid());}
+        );
+    }
+
+    @Test
+    @DisplayName("isRoverStepValid throws IllegalStateException if called when rover and/or surface is uninitialised")
+    void testIsRoverStepValid_illegalStates() {
+        Surface surface = new Surface(new Coordinate(0, 0));
+        MarsMission surfaceNoRover = new MarsMission();
+        surfaceNoRover.setSurface(surface);
+
+        Rover rover = new Rover(new Coordinate(0, 0), Cardinal.NORTH);
+        MarsMission roverNoSurface = new MarsMission();
+        roverNoSurface.setRover(rover);
+
+        assertAll(() -> assertThrows(IllegalStateException.class, () -> mission.isRoverStepValid()),
+                () -> assertThrows(IllegalStateException.class, () -> surfaceNoRover.isRoverStepValid()),
+                () -> assertThrows(IllegalStateException.class, () -> roverNoSurface.isRoverStepValid())
         );
     }
 }
