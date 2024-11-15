@@ -4,6 +4,7 @@ import spatial.Relative;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import spatial.RoverPosition;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -52,6 +53,22 @@ class MarsMissionTest {
                 () -> assertThrows(IllegalArgumentException.class, () -> mission.makeRover(new Coordinate(0, 0), null)),
                 () -> assertThrows(IllegalArgumentException.class, () -> mission.makeRover(null,null))
         );
+    }
+
+    @Test
+    @DisplayName("makeRover returns a valid rover that contains the parameters passed in, using roverPosition variant")
+    void testMakeRover_validParameters_roverPosition() {
+        Rover rover = mission.makeRover(new RoverPosition(new Coordinate(0, 0),  Cardinal.N));
+
+        assertAll(() -> assertEquals(new Coordinate(0, 0), rover.getPosition()),
+                () -> assertEquals(Cardinal.N, rover.getDirection())
+        );
+    }
+
+    @Test
+    @DisplayName("makeRover throws an IllegalArgumentException if given null roverPosition")
+    void testMakeRover_nullParameters_roverPosition() {
+        assertThrows(IllegalArgumentException.class, () -> mission.makeRover(null));
     }
 
     @Test

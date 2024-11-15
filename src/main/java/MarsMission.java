@@ -28,6 +28,14 @@ public class MarsMission {
         return new Rover(position, direction);
     }
 
+    public Rover makeRover(RoverPosition position) {
+        if (position == null) {
+            throw new IllegalArgumentException("Rover position cannot be null");
+        }
+
+        return new Rover(position);
+    }
+
     public void setSurface(Surface surface) {
         if (surface != null) {
             this.surface = surface;
