@@ -173,5 +173,6 @@ public class MarsMission {
                 rover.setDirection(initialPos.getDirection());
             }
         }
+        handler.exit();
     }
 }

@@ -1,6 +1,5 @@
 package io;
 
-import rover.BasicRover;
 import spatial.*;
 
 import java.util.Scanner;
@@ -144,7 +143,7 @@ public class InputHandler {
         System.out.println(out);
     }
 
-    public void printStep(int step, BasicRover rover) {
-        System.out.printf("Step %d: Rover at %s, facing %s\n", step, rover.getPosition(), rover.getDirection());
+    public void exit() {
+        scanner.close();
     }
 }
