@@ -89,7 +89,7 @@ public class InputHandler {
 
     public String validateCommandSequence(String input) {
         if (input == null) {
-            throw new NullPointerException("Input cannot be null");
+            throw new IllegalArgumentException("Input cannot be null");
         }
 
         Pattern commandSequence = Pattern.compile("^[LRM]+$");
@@ -112,10 +112,18 @@ public class InputHandler {
                 promptCommandSequence();
             }
         }
-        int length = commandSequence.length();
+        return interpretCommandSequence(commandSequence);
+    }
+
+    public Command[] interpretCommandSequence(String commandString) {
+        if (commandString == null) {
+            throw new IllegalArgumentException("Input cannot be null");
+        }
+
+        int length = commandString.length();
         Command[] commands = new Command[length];
         for (int i = 0; i < length; i++) {
-            commands[i] = interpretCommand(commandSequence.charAt(i));
+            commands[i] = interpretCommand(commandString.charAt(i));
         }
         return commands;
     }

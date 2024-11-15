@@ -132,15 +132,11 @@ class InputHandlerTest {
     }
 
     @Test
-    @DisplayName("validateCommandSequence throws NullPointerException if handed null")
-    void testValidateCommandSequence_null() {
-        assertThrows(NullPointerException.class, () -> handler.validateCommandSequence(null));
-    }
-
-    @Test
-    @DisplayName("validateCommandSequence throws IllegalArgumentException if handed empty string")
-    void testValidateCommandSequence_emptyString() {
-        assertThrows(IllegalArgumentException.class, () -> handler.validateCommandSequence(""));
+    @DisplayName("validateCommandSequence throws IllegalArgumentException if handed null or empty string")
+    void testValidateCommandSequence_stringNullOrEmpty() {
+        assertAll(() -> assertThrows(IllegalArgumentException.class, () -> handler.validateCommandSequence(null)),
+                () -> assertThrows(IllegalArgumentException.class, () -> handler.validateCommandSequence(""))
+        );
     }
 
     @Test
@@ -188,5 +184,28 @@ class InputHandlerTest {
                 () -> assertEquals(Command.RIGHT, handler.interpretCommand('R')),
                 () -> assertEquals(Command.MOVE, handler.interpretCommand('M'))
         );
+    }
+
+    @Test
+    @DisplayName("interpretCommandSequence throws IllegalArgumentException if null string is passed")
+    void testInterpretCommandSequence_nullString() {
+        assertThrows(IllegalArgumentException.class, () -> handler.interpretCommandSequence(null));
+    }
+
+    @Test
+    @DisplayName("interpretCommandSequence throws IllegalArgumentException if invalid character in string")
+    void testInterpretCommandSequence_invalidString() {
+        assertAll(() -> assertThrows(IllegalArgumentException.class, () -> handler.interpretCommandSequence("lrm")),
+                () -> assertThrows(IllegalArgumentException.class, () -> handler.interpretCommandSequence("L R M")),
+                () -> assertThrows(IllegalArgumentException.class, () -> handler.interpretCommandSequence("LlRM"))
+        );
+    }
+
+    @Test
+    @DisplayName("interpretCommandSequence returns correct Command array if passed valid string")
+    void testInterpretCommandSequence_validString() {
+        Command[] expectedResult = {Command.LEFT, Command.RIGHT, Command.MOVE};
+
+        assertArrayEquals(expectedResult, handler.interpretCommandSequence("LRM"));
     }
 }
