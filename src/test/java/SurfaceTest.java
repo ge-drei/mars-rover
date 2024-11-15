@@ -1,6 +1,7 @@
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import spatial.Coordinate;
+import surface.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -9,7 +10,7 @@ class SurfaceTest {
     @Test
     @DisplayName("isValidCoordinate returns false if provided with invalid coordinates")
     void testIsValidCoordinate_invalidCoordinates() {
-        Surface surface = new Surface(new Coordinate(5, 5));
+        Surface surface = new BasicSurface(new Coordinate(5, 5));
 
         assertAll(() -> assertFalse(surface.isValidCoordinate(new Coordinate(-1, -1))),
                 () -> assertFalse(surface.isValidCoordinate(new Coordinate(-1, 0))),
@@ -31,7 +32,7 @@ class SurfaceTest {
     @Test
     @DisplayName("isValidCoordinate returns true if provided with valid coordinates")
     void testIsValidCoordinate_validCoordinates() {
-        Surface surface = new Surface(new Coordinate(5, 5));
+        Surface surface = new BasicSurface(new Coordinate(5, 5));
 
         assertAll(() -> assertTrue(surface.isValidCoordinate(new Coordinate(0, 0))),
                 () -> assertTrue(surface.isValidCoordinate(new Coordinate(3, 0))),
@@ -47,8 +48,8 @@ class SurfaceTest {
     @Test
     @DisplayName("getMaxCoordinates returns coordinate at top-right of valid grid")
     void testGetMaxCoordinates_getsMaxCoordinates() {
-        Surface surface_fiveFive = new Surface(new Coordinate(5, 5));
-        Surface surface_zeroZero = new Surface(new Coordinate(0, 0));
+        Surface surface_fiveFive = new BasicSurface(new Coordinate(5, 5));
+        Surface surface_zeroZero = new BasicSurface(new Coordinate(0, 0));
 
         assertAll(() -> assertEquals(new Coordinate(5, 5), surface_fiveFive.getMaxCoordinates()),
                 () -> assertEquals(new Coordinate(0, 0), surface_zeroZero.getMaxCoordinates()));

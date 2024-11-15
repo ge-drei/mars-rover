@@ -1,16 +1,20 @@
+package surface;
+
 import spatial.Coordinate;
 
-public class Surface {
+public class BasicSurface implements Surface{
     private Coordinate max;
 
-    public Surface(Coordinate max) {
+    public BasicSurface(Coordinate max) {
         this.max = max;
     }
 
+    @Override
     public Coordinate getMaxCoordinates() {
         return max;
     }
 
+    @Override
     public boolean isValidCoordinate(Coordinate coordinate) {
         int x = coordinate.getX();
         int y = coordinate.getY();

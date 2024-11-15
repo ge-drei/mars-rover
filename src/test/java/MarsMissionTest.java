@@ -5,6 +5,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import spatial.RoverPosition;
+import surface.BasicSurface;
+import surface.Surface;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -83,8 +85,8 @@ class MarsMissionTest {
     @DisplayName("setSurface correctly sets new surface")
     void testSetSurface_validSurface() {
         Rover rover = new Rover(new Coordinate(5, 5), Cardinal.N);
-        Surface surface1 = new Surface(new Coordinate(6, 6));
-        Surface surface2 = new Surface(new Coordinate(5, 5));
+        Surface surface1 = new BasicSurface(new Coordinate(6, 6));
+        Surface surface2 = new BasicSurface(new Coordinate(5, 5));
         mission.setRover(rover);
 
         mission.setSurface(surface1);
@@ -109,7 +111,7 @@ class MarsMissionTest {
     @Test
     @DisplayName("setRover correctly sets new rover")
     void testSetRover_validRover() {
-        Surface surface = new Surface(new Coordinate(5, 5));
+        Surface surface = new BasicSurface(new Coordinate(5, 5));
         Rover rover1 = new Rover(new Coordinate(4, 4), Cardinal.N);
         Rover rover2 = new Rover(new Coordinate(5, 5), Cardinal.N);
         mission.setSurface(surface);
@@ -193,7 +195,7 @@ class MarsMissionTest {
     @Test
     @DisplayName("isRoverStepValid throws IllegalStateException if called when rover and/or surface is uninitialised")
     void testIsRoverStepValid_illegalStates() {
-        Surface surface = new Surface(new Coordinate(0, 0));
+        Surface surface = new BasicSurface(new Coordinate(0, 0));
         MarsMission surfaceNoRover = new MarsMission();
         surfaceNoRover.setSurface(surface);
 
@@ -210,7 +212,7 @@ class MarsMissionTest {
     @Test
     @DisplayName("executeRoverStep throws IllegalStateException if called when rover and/or surface is uninitialised")
     void testExecuteRoverStep_illegalStates() {
-        Surface surface = new Surface(new Coordinate(0, 0));
+        Surface surface = new BasicSurface(new Coordinate(0, 0));
         MarsMission surfaceNoRover = new MarsMission();
         surfaceNoRover.setSurface(surface);
 

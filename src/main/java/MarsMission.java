@@ -1,4 +1,6 @@
 import spatial.*;
+import surface.BasicSurface;
+import surface.Surface;
 
 public class MarsMission {
     private Surface surface;
@@ -13,7 +15,7 @@ public class MarsMission {
         if (max.getX() <= 0 || max.getY() <= 0) {
             throw new IllegalArgumentException("Max plateau co-ordinates must be greater than zero");
         } else {
-            return new Surface(max);
+            return new BasicSurface(max);
         }
     }
 
