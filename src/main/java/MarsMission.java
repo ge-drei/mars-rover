@@ -85,6 +85,7 @@ public class MarsMission {
             }
         }
         setRover(makeRover(roverPosition.getCoordinates(), roverPosition.getDirection()));
+
         RoverPosition initialPos = roverPosition;
 
         exit = false;
