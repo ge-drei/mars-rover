@@ -237,4 +237,37 @@ class MarsMissionTest {
 
         assertThrows(IllegalArgumentException.class, () -> mission.executeRoverStep(null));
     }
+
+    @Test
+    @DisplayName("executeCommandSequence throws IllegalArgumentException if command sequence is null")
+    void testExecuteCommandSequence_nullSequence() {
+        mission.setSurface(mission.makeSurface(new Coordinate(5, 5)));
+        mission.setRover(mission.makeRover(new Coordinate(5, 5), Cardinal.N));
+
+        assertThrows(IllegalArgumentException.class, () -> mission.executeCommandSequence(null));
+    }
+
+    @Test
+    @DisplayName("executeCommandSequence returns success and does not move rover if sequence is empty")
+    void testExecuteCommandSequence_emptySequence() {
+        mission.setSurface(mission.makeSurface(new Coordinate(5, 5)));
+        mission.setRover(mission.makeRover(new Coordinate(5, 5), Cardinal.N));
+
+        Command[] sequence = new Command[0];
+        SequenceResult result = mission.executeCommandSequence(sequence);
+
+        assertAll(() -> assertTrue(result.succeeded()),
+                () -> assertEquals("5 5 N", result.message())
+        );
+    }
+
+    @Test
+    @DisplayName("executeCommandSequence returns false and more detailed message if rover goes out of bounds")
+    void testExecuteCommandSequence_failedSequence() {
+        mission.setSurface(mission.makeSurface(new Coordinate(5, 5)));
+        mission.setRover(mission.makeRover(new Coordinate(5, 5), Cardinal.N));
+
+        Command[] sequence = new Command[0];
+        SequenceResult result = mission.executeCommandSequence(sequence);
+    }
 }

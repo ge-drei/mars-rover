@@ -112,6 +112,9 @@ public class MarsMission {
     }
 
     public SequenceResult executeCommandSequence(Command[] commandSequence) {
+        if (commandSequence == null) {
+            throw new IllegalArgumentException("Command sequence cannot be null");
+        }
         int step = 0;
         boolean successful;
         for (Command command :commandSequence) {
