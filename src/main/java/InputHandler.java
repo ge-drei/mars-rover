@@ -101,6 +101,7 @@ public class InputHandler {
     }
 
     public Command[] getCommandSequence() {
+        promptCommandSequence();
         String commandSequence = "";
         boolean exit = false;
         while (!exit) {

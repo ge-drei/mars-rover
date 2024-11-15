@@ -111,6 +111,22 @@ public class MarsMission {
         return false; // Command not recognised
     }
 
+    public SequenceResult executeCommandSequence(Command[] commandSequence) {
+        int step = 0;
+        boolean successful;
+        for (Command command :commandSequence) {
+            step++;
+            successful = executeRoverStep(command);
+            if (!successful) {
+                return new SequenceResult(false, String.format("Error in step %d: Rover went out of bounds from %s",
+                        step, rover.getPosition()));
+            }
+        }
+        Coordinate finalPosition = rover.getPosition();
+        return new SequenceResult(true, String.format("%d %d %s",
+                finalPosition.getX(), finalPosition.getY(), rover.getDirection()));
+    }
+
     public void begin() {
         setSurface(makeSurface(handler.getMaxSurfaceSize()));
 
@@ -129,34 +145,18 @@ public class MarsMission {
         RoverPosition initialPos = roverPosition;
 
         exit = false;
-        boolean falseIfError = true;
         Command[] commandSequence;
-        while(!exit) {
-            if (!falseIfError) {
+        while (!exit) {
+            commandSequence = handler.getCommandSequence();
+            SequenceResult result = executeCommandSequence(commandSequence);
+            if (result.succeeded()) {
+                handler.out(result.message());
+                exit = true;
+            } else {
+                handler.out(result.message());
                 rover.setPosition(initialPos.getCoordinates());
                 rover.setDirection(initialPos.getDirection());
             }
-            falseIfError = true;
-            int step = 0;
-            handler.promptCommandSequence();
-            commandSequence = handler.getCommandSequence();
-//            handler.printStep(step, rover);
-            for (Command command: commandSequence) {
-                step++;
-                falseIfError = executeRoverStep(command);
-                if (falseIfError) {
-//                    handler.printStep(step, rover);
-                } else {
-                    handler.out(String.format("Error in step %d: Rover went out of bounds from %s",
-                            step, rover.getPosition()));
-                    break;
-                }
-            }
-            if (falseIfError) {
-                exit = true;
-            }
-            Coordinate finalPosition = rover.getPosition();
-            handler.out(String.format("%d %d %s",finalPosition.getX(), finalPosition.getY(), rover.getDirection()));
         }
     }
 }
